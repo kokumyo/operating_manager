@@ -1,0 +1,2 @@
+class Operating < ApplicationRecord
+end

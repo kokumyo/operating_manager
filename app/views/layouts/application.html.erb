@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OperatingManager</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'layouts/navbar' %>
+  	<div class="container">
+
+      <div class="row">
+        <div class="col-sm-2">
+          サイドバー
+
+          <ul style="list-style-type: none;font-size: 0.9em;margin-top: 10px; padding-left: 10px;">
+            <li><%= link_to '稼働集計表', '#' %></li>
+            <li><%= link_to 'プロジェクト編集', '#' %></li>
+            <li><%= link_to '権限編集', '#' %></li>
+          </ul>
+        </div>
+        <div class="col-sm-10">
+          <%= yield %>
+        </div>
+      </div>
+
+    </div>
+    <%= debug(params) if Rails.env.development? %>
+  </body>
+</html>

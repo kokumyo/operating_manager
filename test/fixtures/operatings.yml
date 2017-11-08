@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  year: 2017
+  month: 11
+  day: 1
+  num: 0
+  project_id: 1
+  time: 4.5
+  summary: テストあああああああああああ
+
+two:
+  user_id: 1
+  year: 2017
+  month: 11
+  day: 1
+  num: 1
+  project_id: 2
+  time: 3
+  summary: テストいいいいいいいいいいいいいい

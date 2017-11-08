@@ -1,0 +1,135 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+pj1:
+  id: 1
+  name: ベネフィットワン(不具合対応)
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2018
+  end_month: 2
+  flag: true
+  order: 1
+
+pj2:
+  id: 2
+  name: セブン(アプリ開発)
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 2
+
+pj3:
+  id: 3
+  name: ＰＤＣ(開発)
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 3
+
+pj4:
+  id: 4
+  name: ＹＢＳ(開発)
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 4
+
+pj5:
+  id: 5
+  name: NaCl_特定健診用モック画面作成業務
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 5
+
+pj6:
+  id: 6
+  name: MUL_IoTビジネスモデル構築に向けたPMO支援
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 6
+
+pj7:
+  id: 7
+  name: CEC_ecatサーバリプレイス
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 7
+
+pj8:
+  id: 8
+  name: WCS監視
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 8
+
+pj9:
+  id: 9
+  name: MMnet監視
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 9
+
+pj10:
+  id: 10
+  name: Ncom保守
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 10
+
+pj11:
+  id: 11
+  name: 楽々Workflow Ⅱ クラウドAWS化
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 11
+
+pj12:
+  id: 12
+  name: その他(教育育成)
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 12
+
+pj13:
+  id: 13
+  name: その他
+  begin_year: 2017
+  begin_month: 10
+  end_year: 2017
+  end_month: 3
+  flag: true
+  order: 13
+
+
+
+
