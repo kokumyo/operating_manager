@@ -1,0 +1,133 @@
+
+<table style="width:98%">
+	<tr>
+		<td style="text-align: left;" width="40">&lt;&lt;</td>
+		<td style="text-align: center;"><%= @date.strftime("%Y年%m月") %> 稼働実績表</td>
+		<td style="text-align: right;" width="40">&gt;&gt;</td>
+	</tr>
+</table>
+
+<%= form_tag operating_path(@user), method: :patch do %>
+
+<%= hidden_field_tag :year, @date.year %>
+<%= hidden_field_tag :month, @date.month %>
+
+<table width="98%" style="font-size: 0.8em;">
+	<tr>
+		<td>パソナテック／奥名 健太郎</td>
+		<td style="text-align: right;">
+			<%= button_tag '登録' %>
+			<%= link_to 'キャンセル', action: :show %>
+		</td>
+	</tr>
+</table>
+<div id="operatings">
+<table width="98%">
+	<tr>
+		<th width="30"></th>
+		<th width="45">日付</th>
+		<th width="40">曜日</th>
+		<th width="220">プロジェクト名</th>
+		<th width="55">時間</th>
+		<th width="">備考</th>
+		<th width="30">消</th>
+	</tr>
+	<%
+		current_month = @date.month
+		d = Date.new(@date.year, @date.month, 1)
+		i = 0
+		while (d.month == current_month) do
+			operatings = @operatings.select {|op| [op.year,op.month,op.day] == [d.year,d.month,d.day]}
+			operating_count = operatings.length
+	%>
+	<tr id="row_<%= i %>_0" class="<%= class_for_operating_date d %>">
+		<td>
+			<div id="add_column_<%= i %>" class="div_btn" data-index="<%= i %>">
+				+
+				<%= hidden_field_tag "operating[%d][0][year]" % i, d.year %>
+				<%= hidden_field_tag "operating[%d][0][month]" % i, d.month %>
+				<%= hidden_field_tag "operating[%d][0][day]" % i, d.day %>
+				<input type="hidden" name="counter" id="counter_<%= i %>"
+				 disabled="disabled" value ="<%= operating_count == 0 ? 1 : operating_count %>">
+			</div>
+		</td>
+		<td><%= d.strftime("%m/%d") %></td>
+		<td><%= d.strftime("%a") %></td>
+		<td>
+			<%= select_tag "operating[%d][0][project_id]" % i, 
+				options_from_collection_for_select(@projects, :id, :name, 
+					operating_count == 0 ? "" : operatings[0].project_id), 
+				include_blank: true %>
+		</td>
+		<td>
+			<%= number_field_tag "operating[%d][0][time]" % i,
+				operating_count == 0 ? "" : "%g" % operatings[0].time, 
+				{ min: 0, max: 24, step: 0.25, class: :input_time } %>
+		</td>
+		<td>
+			<%= text_field_tag "operating[%d][0][summary]" % i, 
+				operating_count == 0 ? "" : operatings[0].summary,
+				{ class: :input_summary } %>
+		</td>
+		<td><button type="button" id="btn_clear_<%= i %>"></button></td>
+	</tr>
+
+		<% 
+			if operating_count > 1 then
+				(1..operating_count-1).each do |j|
+		%>
+
+	<tr id="row_<%= i %>_<%= j %>" class="<%= class_for_operating_date d %>">
+		<td class="sub_row">
+			<div id="rm_column_<%= i %>_<%= j %>" class="div_btn sub_col opened" data-index="<%= i %>_<%= j %>">
+				-
+				<%= hidden_field_tag "operating[%d][%d][year]" % [i, j], d.year %>
+				<%= hidden_field_tag "operating[%d][%d][month]" % [i, j], d.month %>
+				<%= hidden_field_tag "operating[%d][%d][day]" % [i, j], d.day %>
+			</div>
+		</td>
+		<td></td>
+		<td></td>
+		<td>
+			<div class="sub_col opened">
+				<%= select_tag "operating[%d][%d][project_id]" % [i, j], 
+					options_from_collection_for_select(@projects, :id, :name, operatings[j].project_id), 
+					include_blank: true %>
+			</div>
+		</td>
+		<td>
+			<div class="sub_col opened">
+				<%= number_field_tag "operating[%d][%d][time]" % [i, j], 
+					"%g" % operatings[j].time, { min: 0, max: 24, step: 0.25, class: :input_time } %>
+			</div>
+		</td>
+		<td>
+			<div class="sub_col opened">
+				<%= text_field_tag "operating[%d][%d][summary]" % [i, j], 
+					operatings[j].summary, { class: :input_summary } %>
+			</div>
+		</td>
+		<td></td>
+	</tr>
+
+	<%
+				end
+			end
+		d += 1
+		i += 1
+		end
+	%>
+</table>
+</div>
+
+<% end %>
+
+
+<%= javascript_tag do %>
+var projects = [
+	<% @projects.each do |p| %>
+	{ "id":<%= p.id %>, "name":"<%= p.name %>" },
+	<% end %>
+];
+<% end %>
+

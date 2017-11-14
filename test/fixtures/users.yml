@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  name_kana: MyString
-  group: MyString
+  id: 1
+  name: 奥名 健太郎
+  name_kana: オクミョウ ケンタロウ
+  group: パソナテック
   role_id: 1
 
 two:
-  name: MyString
-  name_kana: MyString
-  group: MyString
-  role_id: 1
+  id: 2
+  name: 田中 一郎
+  name_kana: タナカ イチロウ
+  group: パソナテック
+  role_id: 2

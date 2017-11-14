@@ -4,4 +4,8 @@ module OperatingsHelper
 	def class_for_operating_date (date)
 		(date.sunday? || HolidayJp.holiday?(date)) ? "holiday" : date.saturday? ? "saturday" : ""
 	end
+
+	def all_operatings_available?
+		true
+	end
 end

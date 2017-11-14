@@ -1,9 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  code: MyString
-  name: MyString
+  id: 1
+  code: administrator
+  name: 管理者
+  all_operatings_availabe: true
+  spreadsheet_available: true
+  projects_editable: true
+  user_role_editable: true
 
 two:
-  code: MyString
-  name: MyString
+  id: 2
+  code: general
+  name: 一般ユーザー

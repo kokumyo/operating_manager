@@ -40,6 +40,10 @@ ActiveRecord::Schema.define(version: 20171030075205) do
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "code"
     t.string "name"
+    t.boolean "all_operatings_availabe", default: false
+    t.boolean "spreadsheet_available", default: false
+    t.boolean "projects_editable", default: false
+    t.boolean "user_role_editable", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

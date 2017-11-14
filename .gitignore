@@ -16,4 +16,9 @@
 /node_modules
 /yarn-error.log
 
+/config/database.yml
+/public/system/
+
+.DS_Store
+
 .byebug_history

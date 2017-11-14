@@ -1,13 +1,27 @@
 class OperatingsController < ApplicationController
 
 	def show
-		@date = Date.today
-		@operating = Operating.new
-		@operatings = Operating.all.order(:day, :num)
+
+		@user = User.find(params[:id])
+		@users = User.all
+		@date = get_date_param
+
+		@operatings = Operating.where(user_id: @user.id, year: @date.year, month: @date.month).order(:day, :num)
+		@projects = Project.all.order(:order)
+
+#		render 'operatings/edit'
+	end
+
+	def edit
+		@user = User.find(params[:id])
+		@date = get_date_param
+
+		@operatings = Operating.where(user_id: @user.id, year: @date.year, month: @date.month).order(:day, :num)
 		@projects = Project.all.order(:order)
 	end
 
-	def create
+	def update
+		user_id = params[:id]
 		Operating.transaction do
 
 			Operating.where(year: params[:year]).where(month: params[:month]).delete_all
@@ -17,16 +31,18 @@ class OperatingsController < ApplicationController
 				operatings_per_day.each do |j, operating|
 					@operating = Operating.new(operating_params(operating))
 					next if @operating.project_id.nil?
+					@operating.user_id = user_id
 					@operating.num = num
 					@operating.save!
 					num += 1
 				end
 			end
 		end
-#		@operating = Operating.new(params[:operating]['0']['0'])
-
-#		render plain: 'パラメータ：' + params[:operating]['0']['0'].inspect
-		render 'operatings/sample'
+		redirect_to action: :show
+		rescue ActiveRecord::RecordInvalid => invalid
+		render plain: invalid.record.errors.full_messages
+		rescue => e
+		render plain: e.message
 	end
 
 	private

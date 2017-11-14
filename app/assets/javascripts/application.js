@@ -17,7 +17,8 @@
 //= require_tree .
 
 
-var ModelName = 'operating';
+/*
+ModelName = 'operating';
 
 var addRow = function(index) {
 
@@ -140,5 +141,7 @@ var getIdAttr = function(index_a, index_b, prop) {
 var getNameAttr = function(index_a, index_b, prop) {
 	return ModelName + '[' + index_a + '][' + index_b + '][' + prop + ']';
 }
+
+*/
 
 

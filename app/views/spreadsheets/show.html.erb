@@ -1,0 +1,52 @@
+<%= form_tag spreadsheet_path(@user), method: :get, id: :form_for_user_selectbox do %>
+	<%= hidden_field_tag :year, @date.year %>
+	<%= hidden_field_tag :month, @date.month %>
+<% end %>
+
+<table style="width:98%">
+	<tr>
+		<td style="text-align: left;" width="40">
+			<%= link_to '<<', controller: :spreadsheets, action: :show,
+				year: @date.prev_month.year, month: @date.prev_month.month %>
+		</td>
+		<td style="text-align: center;"><%= @date.strftime("%Y年%m月") %> 稼働集計表</td>
+		<td style="text-align: right;" width="40">
+			<%= link_to '>>', controller: :spreadsheets, action: :show,
+				year: @date.next_month.year, month: @date.next_month.month %>
+		</td>
+	</tr>
+</table>
+<table width="98%" style="font-size: 0.8em;">
+	<tr>
+		<td>
+			<%= render 'layouts/user' %>
+			
+			<%= link_to '稼働実績表へ', controller: :operatings, action: :show,
+				year: @date.year, month: @date.month %>
+		</td>
+		<td style="text-align: right;">
+		</td>
+	</tr>
+</table>
+<div id="spreadsheet">
+<table width="98%">
+	<thead>
+		<tr>
+			<th width="220">プロジェクト名</th>
+			<th width="55">稼働時間</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td class="total">総計</td>
+			<td class="total_time"><%= @total %></td>
+		</tr>
+	</tfoot>
+	<% @operatings.each do |operating| %>
+	<tr>
+		<td class="project_name"><%= operating.project.name unless operating.project.nil? %></td>
+		<td class="time"><%= operating.sum_time %></td>
+	</tr>
+	<% end %>
+</table>
+</div>

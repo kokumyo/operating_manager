@@ -1,0 +1,6 @@
+<% if all_operatings_available? then %>
+	<%= select_tag :users,
+		options_from_collection_for_select(@users, :id, :group_and_name, @user.id) %> 
+<% else %>
+	<%= @user.group_and_name %>
+<% end %>

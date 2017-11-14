@@ -1,119 +1,71 @@
 
+
+<%= form_tag operating_path(@user), method: :get, id: :form_for_user_selectbox do %>
+	<%= hidden_field_tag :year, @date.year %>
+	<%= hidden_field_tag :month, @date.month %>
+<% end %>
+
+<%= form_tag edit_operating_path, method: :get do %>
+
+	<%= hidden_field_tag :year, @date.year %>
+	<%= hidden_field_tag :month, @date.month %>
+
 <table style="width:98%">
 	<tr>
-		<td style="text-align: left;" width="40">&lt;&lt;</td>
-		<td style="text-align: center;"><%= @date.strftime("%Y年%m月") %> 稼働集計表</td>
-		<td style="text-align: right;" width="40">&gt;&gt;</td>
+		<td style="text-align: left;" width="40">
+			<%= link_to '<<', controller: :operatings, action: :show,
+				year: @date.prev_month.year, month: @date.prev_month.month %>
+		</td>
+		<td style="text-align: center;"><%= @date.strftime("%Y年%m月") %> 稼働実績表</td>
+		<td style="text-align: right;" width="40">
+			<%= link_to '>>', controller: :operatings, action: :show,
+				year: @date.next_month.year, month: @date.next_month.month %>
+		</td>
 	</tr>
 </table>
 
-<%= form_for @operating, url: operating_path do |f|%>
-
-<%= hidden_field_tag "year", @date.year %>
-<%= hidden_field_tag "month", @date.month %>
-
 <table width="98%" style="font-size: 0.8em;">
 	<tr>
-		<td>パソナテック／奥名 健太郎</td>
+		<td>
+			<%= render 'layouts/user' %>
+
+			<%= link_to '稼働集計表へ', controller: :spreadsheets, action: :show,
+				year: @date.year, month: @date.month %>
+		</td>
 		<td style="text-align: right;">
-			<button type="submit" class="btn btn-outline-dark"
-			style="font-size:1em;padding-top: 5px; padding-bottom: 5px;">登録</button>
-			<button type="button" class="btn btn-outline-dark"
-			style="font-size:1em;padding-top: 5px; padding-bottom: 5px;">キャンセル</button>
+			<%= button_tag '編集' %>
 		</td>
 	</tr>
 </table>
 <div id="operatings">
 <table width="98%">
 	<tr>
-		<th width="30"></th>
 		<th width="45">日付</th>
 		<th width="40">曜日</th>
 		<th width="220">プロジェクト名</th>
 		<th width="55">時間</th>
 		<th width="">備考</th>
-		<th width="30">消</th>
 	</tr>
 	<%
 		current_month = @date.month
 		d = Date.new(@date.year, @date.month, 1)
-		i = 0
 		while (d.month == current_month) do
 			operatings = @operatings.select {|op| [op.year,op.month,op.day] == [d.year,d.month,d.day]}
-			operating_count = operatings.length
+			operatings << Operating.new({ year: d.year, month: d.month, day: d.day }) if operatings.empty?
+			operatings.each_with_index do |operating, i|
 	%>
+
 	<tr id="row_<%= i %>_0" class="<%= class_for_operating_date d %>">
-		<td style="cursor: default" onclick="addRow(<%= i %>)">
-			+
-			<%= hidden_field_tag "operating[%d][0][year]" % i, d.year %>
-			<%= hidden_field_tag "operating[%d][0][month]" % i, d.month %>
-			<%= hidden_field_tag "operating[%d][0][day]" % i, d.day %>
-			<%= hidden_field_tag "operating[%d][count]" % i, operating_count == 0 ? 1 : operating_count, 
-				{ disabled: :disabled } %>
-		</td>
-		<td><%= d.strftime("%m/%d") %></td>
-		<td><%= d.strftime("%a") %></td>
-		<td>
-			<%= select_tag "operating[%d][0][project_id]" % i, 
-				options_from_collection_for_select(@projects, :id, :name, operating_count == 0 ? "" : operatings[0].project_id), 
-				include_blank: true %>
-		</td>
-		<td>
-			<%= number_field_tag "operating[%d][0][time]" % i,
-				operating_count == 0 ? "" : "%g" % operatings[0].time, 
-				{ min: 0, max: 24, step: 0.25, class: :input_time } %>
-		</td>
-		<td>
-			<%= text_field_tag "operating[%d][0][summary]" % i, 
-				operating_count == 0 ? "" : operatings[0].summary,
-				{ class: :input_summary } %>
-		</td>
-		<td><button type="button" onclick="clearRow(<%= i %>)"></button></td>
-	</tr>
-
-		<% 
-			if operating_count > 1 then
-				(1..operating_count-1).each do |j|
-		%>
-
-	<tr id="row_<%= i %>_<%= j %>" class="<%= class_for_operating_date d %>">
-		<td style="cursor: default" onclick="removeRow(<%= i %>, <%= j %>)" class="sub_row">
-			<div class="sub_col opened">
-				-
-				<%= hidden_field_tag "operating[%d][%d][year]" % [i, j], d.year %>
-				<%= hidden_field_tag "operating[%d][%d][month]" % [i, j], d.month %>
-				<%= hidden_field_tag "operating[%d][%d][day]" % [i, j], d.day %>
-			</div>
-		</td>
-		<td></td>
-		<td></td>
-		<td>
-			<div class="sub_col opened">
-				<%= select_tag "operating[%d][%d][project_id]" % [i, j], 
-					options_from_collection_for_select(@projects, :id, :name, operatings[j].project_id), 
-					include_blank: true %>
-			</div>
-		</td>
-		<td>
-			<div class="sub_col opened">
-				<%= number_field_tag "operating[%d][%d][time]" % [i, j], 
-					"%g" % operatings[j].time, { min: 0, max: 24, step: 0.25, class: :input_time } %>
-			</div>
-		</td>
-		<td>
-			<div class="sub_col opened">
-				<%= text_field_tag "operating[%d][%d][summary]" % [i, j], 
-					operatings[j].summary, { class: :input_summary } %>
-			</div>
-		</td>
-		<td></td>
+		<td class="date"><%= d.strftime("%m/%d") if i == 0 %></td>
+		<td class="dow"><%= d.strftime("%a") if i == 0 %></td>
+		<td class="project_name"><%= operating.project.name unless operating.project.nil? %></td>
+		<td class="time"><%= "%g" % operating.time unless operating.time.nil? %></td>
+		<td class="summary"><%= operating.summary %></td>
 	</tr>
 
 	<%
-				end
 			end
 		d += 1
-		i += 1
 		end
 	%>
 </table>
@@ -121,14 +73,6 @@
 
 <% end %>
 
-
-<%= javascript_tag do %>
-var projects = [
-	<% @projects.each do |p| %>
-	{ "id":<%= p.id %>, "name":"<%= p.name %>" },
-	<% end %>
-];
-<% end %>
 
 
 
