@@ -1,21 +1,12 @@
+<% provide(:heading, t('view.spreadsheets.title')) %>
+<% provide(:date_selectable, true) %>
+
 <%= form_tag spreadsheet_path(@user), method: :get, id: :form_for_user_selectbox do %>
 	<%= hidden_field_tag :year, @date.year %>
 	<%= hidden_field_tag :month, @date.month %>
 <% end %>
 
-<table style="width:98%">
-	<tr>
-		<td style="text-align: left;" width="40">
-			<%= link_to '<<', controller: :spreadsheets, action: :show,
-				year: @date.prev_month.year, month: @date.prev_month.month %>
-		</td>
-		<td style="text-align: center;"><%= @date.strftime("%Y年%m月") %> 稼働集計表</td>
-		<td style="text-align: right;" width="40">
-			<%= link_to '>>', controller: :spreadsheets, action: :show,
-				year: @date.next_month.year, month: @date.next_month.month %>
-		</td>
-	</tr>
-</table>
+<%= render 'layouts/header' %>
 <table width="98%" style="font-size: 0.8em;">
 	<tr>
 		<td>

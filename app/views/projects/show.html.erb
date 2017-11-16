@@ -1,0 +1,32 @@
+<div class="heading">プロジェクト編集</div>
+
+<div style="text-align: right; width: 98%; font-size: 0.8em;"><%= link_to 'プロジェクトを追加', '#' %></div>
+<div style="text-align: left; width: 98%; font-size: 0.8em;"><%= link_to '適用', '#' %></div>
+<div id="projects">
+<table>
+<thead>
+	<tr>
+		<th></th>
+		<th>プロジェクト名</th>
+		<th width="100">開始月</th>
+		<th width="100">終了月</th>
+		<th width="100"></th>
+	</tr>
+</thead>
+<tbody>
+	<% @projects.each do |project| %>
+	<tr>
+		<td class="checkbox"><%= check_box :prioject, :id %></td>
+		<td class="project_name"><%= project.name %></td>
+		<td><%= project.begin_date %></td>
+		<td><%= project.end_date %></td>
+		<td>
+			<%= link_to '編集', '#' %>
+			<%= link_to '削除', '#' %>
+		</td>
+	</tr>
+	<% end %>
+</tbody>
+</table>
+</div>
+

@@ -5,9 +5,10 @@
 
 MODEL = 'operating'
 
+DEFAULT_TIME = '7.5'
+
 
 $ ->
-#	$('#operating_user_id').on 'change', submitBySelectedId = ->
 	$(document).on 'change', '#users', ->
 		form = $('#form_for_user_selectbox')
 
@@ -19,7 +20,7 @@ $ ->
 		form.submit()
 
 
-	$('div[id^=add_column]').on 'click', ->
+	$(document).on 'click', 'div[id^=add_column]', ->
 		# get index
 		index = $(this).data('index')
 
@@ -61,15 +62,14 @@ $ ->
 		$("tr[id^=row_#{index}_]:last").after(tr_row)
 		counter.val(++count)
 
-		$("##{row_name} div[id^=rm_column]").on 'click', removeRow
-
 		#animation
 		$("##{row_name}").animate({height: '1.5rem'})
 		$("##{row_name} .sub_col").animate({height: '1.5rem'})
 
 		return
 
-	$('div[id^=rm_column]').on 'click', removeRow = ->
+
+	$(document).on 'click', 'div[id^=rm_column]', ->
 
 #		row_obj = $(this).parent('td').parent('tr')
 #		alert row_obj.attr('id')
@@ -84,12 +84,13 @@ $ ->
 		$("##{row_name}").animate({height: '0'})
 
 		setTimeout ->
-			row_obj.remove()
+			$("##{row_name}").remove()
 		, 300
 
 		return
 
-	$('button[id^=btn_clear]').on 'click', ->
+
+	$(document).on 'click', 'button[id^=btn_clear]', ->
 		row_obj = $(this).parent('td').parent('tr')
 
 		row_id_sliced = row_obj.attr('id').slice(0, -1)
@@ -101,6 +102,38 @@ $ ->
 		row_obj.find('select, input[type=text], input[type=number]').val('')
 
 		return
+
+
+	$(document).on 'change', 'select[id$=project_id]', ->
+		if $(this).val()
+			id_time = $(this).attr('id').replace('project_id', 'time')
+			if !$("##{id_time}").val()
+				$("##{id_time}").val(DEFAULT_TIME)
+		else
+			row_obj = $(this).parents('tr[id^=row]')
+			row_obj.find('input[type=text], input[type=number]').val('')
+
+
+
+
+	$(document).on 'focus', 'input[id$=summary]', ->
+		$('#summary_list').empty()
+		id_project = $(this).attr('id').replace('summary', 'project_id')
+		value = $("##{id_project}").val()
+
+		if value
+			summarys = new Set
+			$("select option:selected[value=#{value}]").each ->
+				id_summary = $(this).parent().attr('id').replace('project_id', 'summary')
+				summary = $("##{id_summary}").val()
+				if summary
+					summarys.add(summary)
+
+			
+			summarys.forEach (summary) ->
+				$('#summary_list').append("<option value='#{summary}'>")
+
+
 
 
 	getRowName = (index_a, index_b) ->
@@ -137,8 +170,9 @@ $ ->
 		id = getIdAttr(index_a, index_b, prop)
 		name = getNameAttr(index_a, index_b, prop)
 		class_name = 'input_summary'
+		list = 'summary_list'
 	
-		"<input type='text' name='#{name}' id='#{id}' class='#{class_name}'>"
+		"<input type='text' name='#{name}' id='#{id}' class='#{class_name}' list='#{list}' autocomplete='off'>"
 
 	getIdAttr = (index_a, index_b, prop) ->
 		MODEL + '_' + index_a + '_' + index_b + '_' + prop

@@ -2,5 +2,8 @@ ja:
   view:
     app_name: 稼働集計システム
 
-    operating:
+    operatings:
+      title: 稼働実績表
+
+    spreadsheets:
       title: 稼働集計表

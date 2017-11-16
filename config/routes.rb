@@ -10,5 +10,7 @@ Rails.application.routes.draw do
  # get '/spreadsheet/:id' to: 'spreadsheet'
 
 
+  get '/projects', to: 'projects#show'
+
   get '/sample', to: 'operatings#sample'
 end

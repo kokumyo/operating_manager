@@ -1,0 +1,17 @@
+<table style="width:98%">
+	<tr>
+		<% if yield(:date_selectable).present? then %>
+		<td style="text-align: left;" width="40">
+			<%= link_to '<<', action: :show,
+				year: @date.prev_month.year, month: @date.prev_month.month %>
+		</td>
+		<% end %>
+		<td class="heading"><%= @date.strftime("%Y年%m月") %> <%= yield(:heading) %></td>
+		<% if yield(:date_selectable).present? then %>
+		<td style="text-align: right;" width="40">
+			<%= link_to '>>', action: :show,
+				year: @date.next_month.year, month: @date.next_month.month %>
+		</td>
+		<% end %>
+	</tr>
+</table>

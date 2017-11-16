@@ -1,11 +1,6 @@
+<% provide(:heading, t('view.operatings.title')) %>
 
-<table style="width:98%">
-	<tr>
-		<td style="text-align: left;" width="40">&lt;&lt;</td>
-		<td style="text-align: center;"><%= @date.strftime("%Y年%m月") %> 稼働実績表</td>
-		<td style="text-align: right;" width="40">&gt;&gt;</td>
-	</tr>
-</table>
+<%= render 'layouts/header' %>
 
 <%= form_tag operating_path(@user), method: :patch do %>
 
@@ -14,10 +9,10 @@
 
 <table width="98%" style="font-size: 0.8em;">
 	<tr>
-		<td>パソナテック／奥名 健太郎</td>
+		<td><%= @user.group_and_name %></td>
 		<td style="text-align: right;">
 			<%= button_tag '登録' %>
-			<%= link_to 'キャンセル', action: :show %>
+			<%= link_to 'キャンセル', action: :show, year: @date.year, month: @date.month %>
 		</td>
 	</tr>
 </table>
@@ -61,13 +56,13 @@
 		</td>
 		<td>
 			<%= number_field_tag "operating[%d][0][time]" % i,
-				operating_count == 0 ? "" : "%g" % operatings[0].time, 
+				operating_count == 0 ? "" : adjust_time(operatings[0].time), 
 				{ min: 0, max: 24, step: 0.25, class: :input_time } %>
 		</td>
 		<td>
 			<%= text_field_tag "operating[%d][0][summary]" % i, 
 				operating_count == 0 ? "" : operatings[0].summary,
-				{ class: :input_summary } %>
+				{ class: :input_summary, list: :summary_list, autocomplete: :off } %>
 		</td>
 		<td><button type="button" id="btn_clear_<%= i %>"></button></td>
 	</tr>
@@ -98,13 +93,14 @@
 		<td>
 			<div class="sub_col opened">
 				<%= number_field_tag "operating[%d][%d][time]" % [i, j], 
-					"%g" % operatings[j].time, { min: 0, max: 24, step: 0.25, class: :input_time } %>
+					adjust_time(operatings[j].time), { min: 0, max: 24, step: 0.25, class: :input_time } %>
 			</div>
 		</td>
 		<td>
 			<div class="sub_col opened">
 				<%= text_field_tag "operating[%d][%d][summary]" % [i, j], 
-					operatings[j].summary, { class: :input_summary } %>
+					operatings[j].summary, 
+					{ class: :input_summary, list: :summary_list, autocomplete: :off } %>
 			</div>
 		</td>
 		<td></td>
@@ -122,6 +118,8 @@
 
 <% end %>
 
+<datalist id="summary_list">
+</datalist>
 
 <%= javascript_tag do %>
 var projects = [

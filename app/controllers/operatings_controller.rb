@@ -8,8 +8,6 @@ class OperatingsController < ApplicationController
 
 		@operatings = Operating.where(user_id: @user.id, year: @date.year, month: @date.month).order(:day, :num)
 		@projects = Project.all.order(:order)
-
-#		render 'operatings/edit'
 	end
 
 	def edit
@@ -24,7 +22,7 @@ class OperatingsController < ApplicationController
 		user_id = params[:id]
 		Operating.transaction do
 
-			Operating.where(year: params[:year]).where(month: params[:month]).delete_all
+			Operating.where(user_id: user_id).where(year: params[:year]).where(month: params[:month]).delete_all
 			
 			params[:operating].each do |i, operatings_per_day|
 				num = 0

@@ -14,6 +14,13 @@
  @import "bootstrap";
 
 
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -55,11 +62,20 @@ h2 {
 }
 
 
-/* Operatings */
+/* Header */
 
-#operatings, #spreadsheet {
+.heading {
+	font-size: 1.4rem;
+	font-weight: bolder;
+	text-align: center;
+}
+
+/*  */
+
+#operatings, #spreadsheet, #projects {
 	font-size: 0.8em;
 	table {
+		width: 98%;
 		background-color: #f8f9fa;
 		th {
 			text-align: center;
@@ -87,6 +103,16 @@ h2 {
 
 			input.input_summary {
 			}
+
+			input.input_project {
+				width: 98%;
+			}
+
+			input.input_month {
+				width: 98%;
+				text-align: center;
+			}
+
 		}
 
 		td.project_name {
@@ -113,6 +139,15 @@ h2 {
 			background-color: #e0e1e2;
 			text-align: right;
 			padding: 0.1em 0.5em;
+		}
+
+		td.checkbox {
+			width: 22px;
+			padding: 2px 0 0 0;
+			input {
+				padding: 0px;
+				margin-left: 2px;
+			}
 		}
 
 	}
@@ -152,5 +187,14 @@ h2 {
 
 
 
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
 
 
