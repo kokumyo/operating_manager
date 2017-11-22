@@ -11,8 +11,9 @@
 	<tr>
 		<td><%= @user.group_and_name %></td>
 		<td style="text-align: right;">
-			<%= button_tag '登録' %>
-			<%= link_to 'キャンセル', action: :show, year: @date.year, month: @date.month %>
+			<%= button_tag '登録', class: 'btn btn-primary btn-custom' %>
+			<%= link_to 'キャンセル', { action: :show, year: @date.year, month: @date.month },
+				{ class: 'btn btn-secondary btn-custom', role: :button } %>
 		</td>
 	</tr>
 </table>
@@ -46,8 +47,8 @@
 				 disabled="disabled" value ="<%= operating_count == 0 ? 1 : operating_count %>">
 			</div>
 		</td>
-		<td><%= d.strftime("%m/%d") %></td>
-		<td><%= d.strftime("%a") %></td>
+		<td class="date"><%= d.strftime("%m/%d") %></td>
+		<td class="dow"><%= d.strftime("%a") %></td>
 		<td>
 			<%= select_tag "operating[%d][0][project_id]" % i, 
 				options_from_collection_for_select(@projects, :id, :name, 

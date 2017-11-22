@@ -1,0 +1,66 @@
+<div class="heading">プロジェクト一覧</div>
+
+<div style="text-align: right; width: 98%; font-size: 0.8em; padding: 2px;">
+	<%= link_to 'プロジェクトを追加', action: :new %>
+</div>
+
+<div style="text-align: left; width: 98%; font-size: 0.8em; padding: 2px;">
+<%= form_tag '', method: :delete do %>
+	<%= button_tag '編集', { id: :edit, type: :button, class: 'btn btn-primary btn-custom',
+							disabled: button_disabled } %>
+	<%= button_tag '削除', { id: :delete, type: :submit, class: 'btn btn-primary btn-custom',
+							disabled: button_disabled } %>
+	<%= button_tag '上へ', { id: :up, type: :button, class: 'btn btn-primary btn-custom',
+							disabled: button_up_disabled } %>
+	<%= button_tag '下へ', { id: :down, type: :button, class: 'btn btn-primary btn-custom',
+							disabled: button_down_disabled } %>
+<% end %>
+</div>
+<%= form_tag projects_replace_all_path, id: :form_projects do %>
+<div id="projects">
+<table>
+<thead>
+	<tr>
+		<th width=""></th>
+		<th>プロジェクト名</th>
+		<th width="180">期間</th>
+		<th width="120">表示</th>
+	</tr>
+</thead>
+<tbody id="sortable_table">
+	<% @projects.each do |project| %>
+	<tr>
+		<td class="radio_button">
+			<%= radio_button_tag :project_id, project.id, is_project_checked(project.id),
+				{ data: { path: project_path(project.id) } } %>
+			<%= hidden_field_tag 'projects[]', project.id %>
+		</td>
+		<td class="project_name"><%= project.name %></td>
+		<td class="period"><%= project.period %></td>
+		<td><%= project.flag ? '○' : '×' %></td>
+	</tr>
+	<% end %>
+</tbody>
+</table>
+</div>
+
+<%= javascript_tag do %>
+
+jQuery(function($){
+	var fixhelper = function(ev, ui) {
+		ui.children().each(function() {
+			$(this).width($(this).width());
+		});
+		return ui;
+	};
+	$('#sortable_table').sortable({ helper: fixhelper,
+		update: function(ev, ui) {
+			$('#form_projects').submit();
+		} 
+	});
+});
+
+<% end %>
+
+<% end %>
+

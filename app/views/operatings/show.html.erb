@@ -13,16 +13,16 @@
 
 
 <%= render 'layouts/header' %>
+<div style="width: 98%; text-align: right; font-size: 0.8em;">
+	<%= link_to '稼働集計表へ', controller: :spreadsheets, action: :show, year: @date.year, month: @date.month %>
+</div>
 <table width="98%" style="font-size: 0.8em;">
 	<tr>
 		<td>
 			<%= render 'layouts/user' %>
-
-			<%= link_to '稼働集計表へ', controller: :spreadsheets, action: :show,
-				year: @date.year, month: @date.month %>
 		</td>
 		<td style="text-align: right;">
-			<%= button_tag '編集' %>
+			<%= button_tag '編集', class: 'btn btn-primary btn-custom' %>
 		</td>
 	</tr>
 </table>

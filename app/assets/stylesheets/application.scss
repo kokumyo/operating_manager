@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require jquery-ui
  */
  @import "bootstrap";
 
@@ -20,6 +21,13 @@
   box-sizing:         border-box;
 }
 
+
+.btn-custom {
+	padding: 0.2rem 0.7rem;
+	font-size: 0.70rem;
+	line-height: 1.0;
+	border-radius: 0.15rem;
+}
 
 /* typography */
 
@@ -72,29 +80,41 @@ h2 {
 
 /*  */
 
-#operatings, #spreadsheet, #projects {
-	font-size: 0.8em;
+#operatings, #spreadsheet, #projects, #project_form {
+	font-size: 0.725em;
 	table {
 		width: 98%;
 		background-color: #f8f9fa;
-		th {
+
+		tr.holiday {
+			background-color: #FFC0CB;
+			.date, .dow {
+				color: #FF0000;
+			}
+		}
+
+		tr.saturday {
+			background-color: #99CCFF;
+			.date, .dow {
+				color: #0000FF;
+			}
+		}
+
+		th, td.header {
 			text-align: center;
-			color: #FFFFFF;
-			background-color: #000000;
-			border: solid 1px #FFFFFF;
+			color: white;
+			background-color: black;
+			border: solid 2px white;
+			font-weight: bold;
 		}
 
 		td {
 			text-align: center;
-			border: solid 1px #FFFFFF;
-
-			select {
-				width: 98%;
-			}
+			border: solid 2px white;
 
 			input {
 				width: 98%;
-				font-size: 0.9em;
+				font-size: 0.975em;
 			}
 
 			input.input_time {
@@ -141,7 +161,12 @@ h2 {
 			padding: 0.1em 0.5em;
 		}
 
-		td.checkbox {
+		td.period {
+			text-align: center;
+			padding: 0.1em 0.5em;
+		}
+
+		td.radio_button {
 			width: 22px;
 			padding: 2px 0 0 0;
 			input {
@@ -153,29 +178,37 @@ h2 {
 	}
 }
 
-.saturday {
-	color: #0000FF;
-	background-color: #99CCFF;
+#projects {
+	table tr:hover {
+		background-color: #FFCC99;
+	}
 }
 
-.holiday {
-	color: #FF0000;
-	background-color: #FFC0CB;
+#project_form {
+	table {
+		input[type=radio] {
+			width: 20px;
+		}
+
+		input[type=month] {
+			width: 7.5rem;
+		}
+		
+	}
 }
+
+
+/* animation */
 
 .sub_row {
-/*
-	-webkit-transition:height 2s;
-	transition:height 2s;_
-*/
+/*	-webkit-transition:height 1s;
+	transition:height 1s;*/
 }
 
 .sub_col {
 	height: 0;
-/*
-	-webkit-transition: height 1s;
-	transition: height 1s;
-*/
+/*	-webkit-transition: height 1s;
+	transition: height 1s;*/
 	padding: 0px;
 	z-index: -1;
 	overflow: hidden;

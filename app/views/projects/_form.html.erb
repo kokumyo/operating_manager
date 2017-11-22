@@ -1,0 +1,38 @@
+<%= form_for @project do |f| %>
+  <% if @project.errors.any? %>
+  	<div id="error_explanation">
+  		<ul>
+  	      <% @project.errors.full_messages.each do |msg| %>
+  	    	<li><%= msg %></li>
+  	      <% end %>
+  		</ul>
+  	</div>
+  <% end %>
+<div id="project_form">
+<table>
+	<tr>
+		<td class="header">プロジェクト名</td>
+		<td><%= f.text_field :name %></td>
+	</tr>
+	<tr>
+		<td class="header">期間</td>
+		<td style="text-align: left;">
+			<%= f.radio_button :period_flag, true %>期間あり
+			<%= f.month_field :begin_date %>〜<%= f.month_field :end_date %>
+			<%= f.radio_button :period_flag, false %>期間なし
+		</td>
+	</tr>
+	<tr>
+		<td class="header">表示設定</td>
+		<td style="text-align: left;">
+			<%= f.radio_button :flag, true %>表示する
+			<%= f.radio_button :flag, false %>表示しない
+		</td>
+	</tr>
+</table>
+<div style="width: 98%; text-align: right; padding: 2px;">
+	<%= f.submit '登録', class: 'btn btn-primary btn-custom' %>
+	<%= link_to 'キャンセル', '#',  { class: 'btn btn-secondary btn-custom', role: :button, onclick: "history.back();" } %>
+</div>
+</div>
+<% end %>

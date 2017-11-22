@@ -56,6 +56,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Use Bootstrap 4
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # To get holidays in Japan
 gem 'holiday_jp'

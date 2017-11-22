@@ -27,11 +27,12 @@ ActiveRecord::Schema.define(version: 20171030075205) do
 
   create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
+    t.boolean "period_flag", default: true
     t.integer "begin_year"
     t.integer "begin_month"
     t.integer "end_year"
     t.integer "end_month"
-    t.boolean "flag"
+    t.boolean "flag", default: true
     t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
